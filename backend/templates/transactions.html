@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transactions - Banking Cloud Analytics</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/base.css">
+</head>
+
+<body class="bg-light">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/dashboard"><i class="bi bi-bank"></i> Banking Cloud</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav ms-auto gap-2">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+          <a class="nav-link" href="/accounts-page">Accounts</a>
+          <a class="nav-link active" href="/transactions-page">Transactions</a>
+          <a class="nav-link" href="/analytics-page">Analytics</a>
+          <a class="nav-link text-danger" href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <!-- Header -->
+    <div class="mb-4">
+      <h1 class="h2 fw-bold">Transaction History</h1>
+      <p class="text-muted">View all your transactions from CSV data</p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+      <div class="col-md-4 mb-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body text-center">
+            <i class="bi bi-arrow-down-circle text-success fs-2 mb-2"></i>
+            <p class="text-muted mb-1">Total Credits</p>
+            <h3 id="total-credits" class="text-success">₹0.00</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body text-center">
+            <i class="bi bi-arrow-up-circle text-danger fs-2 mb-2"></i>
+            <p class="text-muted mb-1">Total Debits</p>
+            <h3 id="total-debits" class="text-danger">₹0.00</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body text-center">
+            <i class="bi bi-list-check text-info fs-2 mb-2"></i>
+            <p class="text-muted mb-1">Total Transactions</p>
+            <h3 id="total-count" class="text-info">0</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white">
+        <h5 class="mb-0">Filter Transactions</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Transaction Type</label>
+            <select id="type-filter" class="form-select">
+              <option value="">All Types</option>
+              <option value="credit">Credit</option>
+              <option value="debit">Debit</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Category</label>
+            <select id="category-filter" class="form-select">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Search Description</label>
+            <input id="search-filter" type="text" class="form-control" placeholder="Search...">
+          </div>
+        </div>
+        <button class="btn btn-primary mt-3" onclick="applyFilters()">
+          <i class="bi bi-funnel"></i> Apply Filters
+        </button>
+        <button class="btn btn-secondary mt-3" onclick="resetFilters()">
+          <i class="bi bi-x-circle"></i> Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Transactions Table -->
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white d-flex justify-content-between">
+        <h5 class="mb-0">All Transactions</h5>
+        <button class="btn btn-sm btn-primary" onclick="loadTransactions()">
+          <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
+      </div>
+      <div class="card-body">
+        <div style="overflow-x: auto;">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody id="tx-table">
+              <tr>
+                <td colspan="5" class="text-center text-muted py-4">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/config.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+
+  <script>
+    let allTransactions = [];
+    let filteredTransactions = [];
+
+    function logout() {
+      clearToken();
+      window.location.href = '/';
+    }
+
+    async function loadTransactions() {
+      const res = await apiCall('/api/csv-transactions');
+      if (res.error) {
+        document.getElementById("tx-table").innerHTML = 
+          '<tr><td colspan="5" class="text-center text-danger">Error: ' + res.error + '</td></tr>';
+        return;
+      }
+      
+      allTransactions = res.transactions || [];
+      filteredTransactions = [...allTransactions];
+      
+      // Populate category filter
+      const categories = [...new Set(allTransactions.map(t => t.category))].sort();
+      const categoryFilter = document.getElementById('category-filter');
+      categoryFilter.innerHTML = '<option value="">All Categories</option>';
+      categories.forEach(cat => {
+        if (cat) {
+          categoryFilter.innerHTML += `<option value="${cat}">${cat.replace(/_/g, ' ')}</option>`;
+        }
+      });
+      
+      displayTransactions();
+    }
+
+    function applyFilters() {
+      const typeFilter = document.getElementById('type-filter').value;
+      const categoryFilter = document.getElementById('category-filter').value;
+      const searchFilter = document.getElementById('search-filter').value.toLowerCase();
+      
+      filteredTransactions = allTransactions.filter(tx => {
+        if (typeFilter && tx.type !== typeFilter) return false;
+        if (categoryFilter && tx.category !== categoryFilter) return false;
+        if (searchFilter && !tx.description.toLowerCase().includes(searchFilter)) return false;
+        return true;
+      });
+      
+      displayTransactions();
+    }
+
+    function resetFilters() {
+      document.getElementById('type-filter').value = '';
+      document.getElementById('category-filter').value = '';
+      document.getElementById('search-filter').value = '';
+      filteredTransactions = [...allTransactions];
+      displayTransactions();
+    }
+
+    function displayTransactions() {
+      const tbody = document.getElementById("tx-table");
+      tbody.innerHTML = "";
+      
+      if (filteredTransactions.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No transactions found</td></tr>';
+        updateSummary(0, 0, 0);
+        return;
+      }
+      
+      let totalCredits = 0;
+      let totalDebits = 0;
+      
+      filteredTransactions.forEach(tx => {
+        const amount = parseFloat(tx.amount || 0);
+        if (tx.type === 'credit') totalCredits += amount;
+        if (tx.type === 'debit') totalDebits += amount;
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${tx.date}</td>
+          <td>${tx.description}</td>
+          <td><span class="badge bg-${tx.type === 'credit' ? 'success' : 'danger'}">${tx.type}</span></td>
+          <td>${tx.category.replace(/_/g, ' ')}</td>
+          <td class="text-${tx.type === 'credit' ? 'success' : 'danger'}">₹${amount.toFixed(2)}</td>
+        `;
+        tbody.appendChild(row);
+      });
+      
+      updateSummary(totalCredits, totalDebits, filteredTransactions.length);
+    }
+
+    function updateSummary(credits, debits, count) {
+      document.getElementById('total-credits').textContent = `₹${credits.toFixed(2)}`;
+      document.getElementById('total-debits').textContent = `₹${debits.toFixed(2)}`;
+      document.getElementById('total-count').textContent = count;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!checkAuth()) return;
+      loadTransactions();
+    });
+  </script>
+</body>
+</html>

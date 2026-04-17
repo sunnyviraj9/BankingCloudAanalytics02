@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Banking Cloud Analytics</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/base.css">
+</head>
+
+<body class="bg-light">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/dashboard"><i class="bi bi-bank"></i> Banking Cloud</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav ms-auto gap-2">
+          <a class="nav-link active" href="/dashboard">Dashboard</a>
+          <a class="nav-link" href="/accounts-page">Accounts</a>
+          <a class="nav-link" href="/transactions-page">Transactions</a>
+          <a class="nav-link" href="/analytics-page">Analytics</a>
+          <a class="nav-link text-danger" href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <!-- Header -->
+    <div class="mb-4">
+      <h1 class="h2 fw-bold">Dashboard</h1>
+      <p class="text-muted">Welcome to your Banking Cloud Analytics</p>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="row mb-4">
+      <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <p class="text-muted mb-2">Total Accounts</p>
+            <h3 id="total-accounts" class="text-primary">0</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <p class="text-muted mb-2">Total Balance</p>
+            <h3 id="total-balance" class="text-success">₹0.00</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <p class="text-muted mb-2">Total Transactions</p>
+            <h3 id="recent-tx-count" class="text-warning">0</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <p class="text-muted mb-2">Status</p>
+            <h3 id="account-status" class="text-info">Active</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accounts Table -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Your Accounts</h5>
+        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addAccountModal">
+          <i class="bi bi-plus"></i> New Account
+        </button>
+      </div>
+      <div class="card-body">
+        <div style="overflow-x: auto;">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Account Name</th>
+                <th>Type</th>
+                <th>Balance</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="accounts-table">
+              <tr>
+                <td colspan="4" class="text-center text-muted py-4">Loading accounts...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="card border-0 shadow-sm">
+      <div class="card-header">
+        <h5 class="mb-0">Recent Transactions (from CSV)</h5>
+      </div>
+      <div class="card-body">
+        <div style="overflow-x: auto;">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Category</th>
+              </tr>
+            </thead>
+            <tbody id="transactions-table">
+              <tr>
+                <td colspan="5" class="text-center text-muted py-4">Loading transactions...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Account Modal -->
+  <div class="modal fade" id="addAccountModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Account Name</label>
+            <input id="account-name" type="text" class="form-control" placeholder="e.g., Savings Account">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Account Type</label>
+            <select id="account-type" class="form-select">
+              <option value="checking">Checking</option>
+              <option value="savings">Savings</option>
+            </select>
+          </div>
+          <div id="account-msg" class="alert alert-info d-none"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="createAccount()">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/config.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+
+  <script>
+    function logout() {
+      clearToken();
+      window.location.href = '/';
+    }
+
+    async function loadDashboard() {
+      await loadAccounts();
+      await loadTransactions();
+      await loadCSVBalance();
+    }
+
+    async function loadAccounts() {
+      const res = await apiCall('/api/accounts');
+      if (res.error) {
+        console.error('Error loading accounts:', res.error);
+        return;
+      }
+
+      const accounts = res.accounts || [];
+      document.getElementById('total-accounts').textContent = accounts.length;
+
+      let tbody = document.getElementById('accounts-table');
+      tbody.innerHTML = '';
+
+      if (accounts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No accounts yet. Create one!</td></tr>';
+        return;
+      }
+
+      accounts.forEach(acc => {
+        const balance = parseFloat(acc.balance || 0);
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${acc.name}</td>
+          <td><span class="badge bg-light text-dark">${acc.type}</span></td>
+          <td>₹${balance.toFixed(2)}</td>
+          <td><span class="badge bg-success">${acc.status}</span></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    async function loadCSVBalance() {
+      const res = await apiCall('/api/csv-summary');
+      if (res.error) {
+        console.error('Error loading CSV summary:', res.error);
+        document.getElementById('total-balance').textContent = '₹0.00';
+        return;
+      }
+
+      const netBalance = parseFloat(res.net_balance || 0);
+      document.getElementById('total-balance').textContent = `₹${netBalance.toFixed(2)}`;
+    }
+
+    async function loadTransactions() {
+      const res = await apiCall('/api/csv-transactions');
+      if (res.error) {
+        console.error('Error loading transactions:', res.error);
+        return;
+      }
+
+      const transactions = res.transactions || [];
+      document.getElementById('recent-tx-count').textContent = transactions.length;
+
+      let tbody = document.getElementById('transactions-table');
+      tbody.innerHTML = '';
+
+      if (transactions.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No transactions yet</td></tr>';
+        return;
+      }
+
+      // Show last 10 transactions
+      transactions.slice(0, 10).forEach(tx => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${tx.date}</td>
+          <td>${tx.description}</td>
+          <td><span class="badge bg-${tx.type === 'credit' ? 'success' : 'danger'}">${tx.type}</span></td>
+          <td class="text-${tx.type === 'credit' ? 'success' : 'danger'}">₹${parseFloat(tx.amount || 0).toFixed(2)}</td>
+          <td>${tx.category.replace(/_/g, ' ')}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    async function createAccount() {
+      const name = document.getElementById('account-name').value.trim();
+      const type = document.getElementById('account-type').value;
+      const msgDiv = document.getElementById('account-msg');
+
+      if (!name) {
+        msgDiv.classList.remove('d-none');
+        msgDiv.className = 'alert alert-danger d-block';
+        msgDiv.textContent = '❌ Please enter account name';
+        return;
+      }
+
+      msgDiv.classList.add('d-none');
+
+      const res = await apiCall('/api/accounts', {
+        method: 'POST',
+        body: JSON.stringify({ name, type })
+      });
+
+      if (res.error) {
+        msgDiv.classList.remove('d-none');
+        msgDiv.className = 'alert alert-danger d-block';
+        msgDiv.textContent = '❌ ' + res.error;
+        return;
+      }
+
+      msgDiv.classList.remove('d-none');
+      msgDiv.className = 'alert alert-success d-block';
+      msgDiv.textContent = '✅ Account created successfully!';
+
+      setTimeout(() => {
+        document.getElementById('account-name').value = '';
+        bootstrap.Modal.getInstance(document.getElementById('addAccountModal')).hide();
+        loadDashboard();
+      }, 1000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!checkAuth()) return;
+      loadDashboard();
+    });
+  </script>
+</body>
+</html>

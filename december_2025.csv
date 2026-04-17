@@ -1,0 +1,81 @@
+date,description,amount,type,category
+01-12-2025,Opening Balance,7355.08,credit,opening_balance
+02-12-2025,ANVESH - Paytm,200.00,credit,other
+03-12-2025,SADULA C - Paytm,300.00,credit,other
+04-12-2025,Badineni - Paytm,500.00,credit,other
+05-12-2025,CIEL HR SERVICES - Salary,20000.00,credit,salary
+05-12-2025,DODDAPAN - Self,7000.00,credit,other
+06-12-2025,Avirinen - Gap fund,2600.00,credit,other
+08-12-2025,K Pushp - UPI,50.00,credit,other
+08-12-2025,Google Pay,1.00,credit,other
+15-12-2025,DASARI A - Paytm,3200.00,credit,other
+18-12-2025,Veegala - Paytm,160.00,credit,other
+20-12-2025,BOINI D - Paytm,2000.00,credit,other
+24-12-2025,SANGAMES - Paytm,1200.00,credit,other
+25-12-2025,INTEREST CREDIT,57.00,credit,interest
+26-12-2025,THUDI SP - Paytm,1000.00,credit,other
+28-12-2025,Veegala - Paytm,1200.00,credit,other
+01-12-2025,Badineni - Paytm,500.00,debit,transfer
+02-12-2025,Jio Recharge,19.00,debit,bills_utilities
+03-12-2025,MOHAMMAD - Paytm,15.00,debit,other
+03-12-2025,SATTU KA - Paytm,50.00,debit,food_dining
+03-12-2025,Shiva chat - UPI,40.00,debit,food_dining
+04-12-2025,Mr BANO - Paytm,90.00,debit,other
+04-12-2025,Devavara - Paytm,20.00,debit,other
+06-12-2025,BONTHU B - Paytm,5700.00,debit,transfer
+06-12-2025,PANDI YO - Paytm,650.00,debit,other
+06-12-2025,DAPPUMAN - Paytm,55.00,debit,other
+07-12-2025,YADAIAH - Paytm,2500.00,debit,transfer
+07-12-2025,RATNADEEP - Payme,1160.92,debit,other
+07-12-2025,KASHINAT - Payme,135.00,debit,other
+08-12-2025,Vadde G - Paytm,20.00,debit,other
+08-12-2025,V A N P - UPI,10000.00,debit,transfer
+08-12-2025,MEEDINTI - UPI,50.00,debit,other
+09-12-2025,RATHOD H - Paytm,15.00,debit,other
+09-12-2025,KACHERI - Paytm,20.00,debit,other
+11-12-2025,Mr GHOUS - Paytm,20.00,debit,other
+12-12-2025,ATM Card AMC,236.00,debit,bank_charges
+12-12-2025,NAZEEMA - Paytm,20.00,debit,other
+12-12-2025,JAYALAXMI - Paytm,310.00,debit,other
+12-12-2025,RATNADEEP - Payme,812.96,debit,other
+12-12-2025,KASHINAT - Payme,500.00,debit,other
+12-12-2025,KASHINAT - Payme,20.00,debit,other
+12-12-2025,Mirdoddi - Paytm,10.00,debit,other
+12-12-2025,Veegala - Paytm,100.00,debit,other
+13-12-2025,POONARAM - Paytm,164.00,debit,other
+13-12-2025,KASHINAT - Payme,1700.00,debit,other
+13-12-2025,KINGS FO - Paytm,40.00,debit,food_dining
+14-12-2025,Akula Ma - Paytm,24.00,debit,other
+14-12-2025,Akula Ma - Paytm,10.00,debit,other
+14-12-2025,BOINI D - Paytm,900.00,debit,transfer
+15-12-2025,UTSAVA F - Paytm,40.00,debit,other
+15-12-2025,KARROLLA - Paytm,30.00,debit,other
+15-12-2025,G Prasha - Paytm,20.00,debit,other
+18-12-2025,ATM CASH - Sangareddy,1000.00,debit,cash_withdrawal
+19-12-2025,CHEPYALA - Paytm,4000.00,debit,transfer
+20-12-2025,Veegala - Paytm,300.00,debit,other
+20-12-2025,B MUKESH - Paytm,219.00,debit,other
+21-12-2025,Chinthal - Paytm,50.00,debit,other
+22-12-2025,MODERN B - Paytm,40.00,debit,shopping
+22-12-2025,G LATHAD - Paytm,20.00,debit,other
+24-12-2025,Veegala - Paytm,500.00,debit,other
+24-12-2025,Veegala - Paytm,900.00,debit,other
+26-12-2025,MOHAMMAD - Paytm,15.00,debit,other
+26-12-2025,Mr MAHI - Paytm,130.00,debit,other
+26-12-2025,SRI RENU - Paytm,1050.00,debit,other
+26-12-2025,SHREE AM - Paytm,350.00,debit,other
+26-12-2025,KISHOR P - Paytm,850.00,debit,other
+26-12-2025,DURGA RAM - Paytm,80.00,debit,other
+27-12-2025,CHEPYALA - Paytm,1000.00,debit,transfer
+27-12-2025,DODDAPAN - Paytm,420.00,debit,other
+28-12-2025,KOMAL JAT - Paytm,410.00,debit,other
+28-12-2025,Rudraram - Paytm,100.00,debit,other
+28-12-2025,AMAZON Mumbai,1000.00,debit,shopping
+28-12-2025,Veegala - UPI,1200.00,debit,transfer
+29-12-2025,NALLA SW - Paytm,90.00,debit,other
+30-12-2025,BANDI S - Paytm,100.00,debit,other
+30-12-2025,Jio Recharge,19.00,debit,bills_utilities
+31-12-2025,MS BANDO - Paytm,89.00,debit,other
+31-12-2025,NALLA SW - Paytm,60.00,debit,other
+31-12-2025,MR MOHAM - Paytm,400.00,debit,other
+31-12-2025,Closing Balance,6434.20,credit,closing_balance

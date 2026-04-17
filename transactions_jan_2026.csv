@@ -1,0 +1,88 @@
+date,description,amount,type,category
+01-01-2026,Opening Balance,6434.20,credit,opening_balance
+01-01-2026,Tupagud - Paytm,20.00,debit,food_dining
+01-01-2026,M D Riyaz,40.00,debit,other
+01-01-2026,Mohammed - Paytm,60.00,debit,other
+01-01-2026,Mohammed - Paytm,50.00,debit,other
+01-01-2026,Kashinat - Verification,75.00,debit,other
+01-01-2026,CIEL HR SERVICES - Salary,19998.00,credit,salary
+02-01-2026,Bonthu B - Payment,1600.00,credit,other
+02-01-2026,Naram U - Paytm,1200.00,credit,other
+02-01-2026,Naram U - UPI,3000.00,debit,transfer
+02-01-2026,Naram U - UPI,2000.00,debit,transfer
+02-01-2026,V A N P - UPI,10000.00,debit,transfer
+03-01-2026,Gula Kantis - Paytm,280.00,debit,other
+03-01-2026,Nalla SW - Paytm,10.00,debit,other
+03-01-2026,Begumpet - BharatPe,20.00,debit,other
+05-01-2026,Smart Saver,136.99,debit,bills_utilities
+05-01-2026,Nandapau - Paytm,140.00,debit,other
+06-01-2026,Dammugar - Paytm,600.00,debit,other
+06-01-2026,Yadaiah - Paytm,2500.00,debit,transfer
+06-01-2026,Kashinat - Paytm,15.00,debit,other
+06-01-2026,Md Sajja - Paytm,350.00,debit,other
+07-01-2026,Mrs Sara - Paytm,145.00,debit,other
+08-01-2026,Delicious - Paytm,50.00,debit,food_dining
+08-01-2026,CDM Cash Deposit - Sangareddy,22200.00,credit,cash_deposit
+08-01-2026,Bank Account - Paytm,7980.00,debit,transfer
+08-01-2026,Bank Account - Paytm,14260.00,debit,transfer
+08-01-2026,Shree AM - Paytm,420.00,debit,other
+08-01-2026,Mohammad - Paytm,100.00,debit,other
+08-01-2026,Md Chand - Paytm,20.00,debit,other
+12-01-2026,Nalla SW - Paytm,160.00,debit,other
+12-01-2026,Nalla SW - Paytm,5.00,debit,other
+13-01-2026,Sairam E - Paytm,250.00,debit,other
+13-01-2026,Marikant - Paytm,84.00,debit,other
+14-01-2026,Mr Srih - UPI,70.00,debit,other
+14-01-2026,Mohd Rehan - Paytm,192.00,debit,other
+14-01-2026,Veegala - Paytm,300.00,credit,other
+16-01-2026,Gangasan - Paytm,40.00,debit,other
+16-01-2026,J Kantha - UPI,290.00,debit,other
+17-01-2026,Mr Bingi - UPI,35.00,debit,other
+17-01-2026,Savitha - Paytm,3000.00,credit,other
+18-01-2026,Modern B - Paytm,100.00,debit,shopping
+19-01-2026,Srinivas - UPI,3000.00,credit,other
+19-01-2026,PhonePe - Payment,15.00,debit,other
+19-01-2026,Veegala - Paytm,200.00,credit,other
+20-01-2026,Begumpet - Paytm,15.00,debit,other
+20-01-2026,Parusha - Paytm,350.00,debit,other
+20-01-2026,Topala - Paytm,240.00,credit,other
+20-01-2026,Tuppagud - Paytm,30.00,debit,other
+20-01-2026,Karuna F - Paytm,100.00,debit,other
+20-01-2026,Mohammad - Paytm,60.00,debit,other
+21-01-2026,Fee Collection - Kozhikode,2652.36,debit,education
+21-01-2026,Veegala - Paytm,200.00,debit,other
+21-01-2026,Fee Collection - Kozhikode,2652.36,debit,education
+21-01-2026,Naram UM - UPI,10507.00,credit,other
+22-01-2026,Doddapan - UPI,2684.00,debit,transfer
+22-01-2026,Boini D - Paytm,2000.00,debit,transfer
+22-01-2026,Boini D - Paytm,500.00,debit,transfer
+22-01-2026,Boini D - Paytm,340.00,credit,other
+22-01-2026,M Eswara - UPI,2000.00,debit,transfer
+22-01-2026,Naram U - UPI,500.00,debit,transfer
+24-01-2026,Naram U - Payment,3000.00,credit,other
+25-01-2026,Mahewar - Paytm,820.00,credit,other
+25-01-2026,Kummari - Paytm,10.00,debit,other
+25-01-2026,Rajesh - Payment,10.00,debit,other
+25-01-2026,Mr Chitt - Paytm,50.00,debit,other
+25-01-2026,Khaleel - Paytm,20.00,debit,other
+25-01-2026,Asina Be - Paytm,100.00,debit,other
+26-01-2026,Unique I - UPI,75.00,debit,bills_utilities
+27-01-2026,Ajamari - Paytm,500.00,credit,other
+28-01-2026,Karuna F - Paytm,100.00,debit,other
+28-01-2026,Bonthu B - Gap fund,7620.00,credit,other
+28-01-2026,N Gopal - Payment,1800.00,credit,other
+28-01-2026,Pasham - Gap fund,16640.00,credit,other
+28-01-2026,PhonePe - Payment,294.00,debit,bills_utilities
+28-01-2026,Google Pay - Utility,64.00,debit,bills_utilities
+28-01-2026,Veegala - Paytm,100.00,debit,other
+29-01-2026,Basavesw - Paytm,800.00,credit,other
+29-01-2026,Nandapau - Paytm,2600.00,credit,other
+29-01-2026,Delicious - Paytm,40.00,debit,food_dining
+29-01-2026,Delicious - Paytm,15.00,debit,food_dining
+30-01-2026,Bobba Ha - Paytm,600.00,credit,other
+30-01-2026,Toorp Ve - UPI,2000.00,credit,other
+30-01-2026,Doddapan - UPI,50.00,debit,other
+30-01-2026,Google Pay,2.00,credit,other
+31-01-2026,Boini D - UPI,5000.00,credit,other
+31-01-2026,Chepyala - Paytm,5000.00,debit,other
+31-01-2026,Closing Balance,47216.49,credit,closing_balance

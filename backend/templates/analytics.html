@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics - Banking Cloud Analytics</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="/static/css/base.css">
+</head>
+
+<body class="bg-light">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/dashboard"><i class="bi bi-bank"></i> Banking Cloud</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav ms-auto gap-2">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+          <a class="nav-link" href="/accounts-page">Accounts</a>
+          <a class="nav-link" href="/transactions-page">Transactions</a>
+          <a class="nav-link active" href="/analytics-page">Analytics</a>
+          <a class="nav-link text-danger" href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <!-- Header -->
+    <div class="mb-4">
+      <h1 class="h2 fw-bold"><i class="bi bi-graph-up-arrow"></i> Financial Analytics</h1>
+      <p class="text-muted">Insights from your transaction history</p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+      <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-arrow-down-circle text-success fs-1 mb-2"></i>
+            <p class="text-muted mb-1 small">Total Income</p>
+            <h4 id="total-income" class="text-success mb-0">₹0</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-arrow-up-circle text-danger fs-1 mb-2"></i>
+            <p class="text-muted mb-1 small">Total Expenses</p>
+            <h4 id="total-expense" class="text-danger mb-0">₹0</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-wallet2 text-primary fs-1 mb-2"></i>
+            <p class="text-muted mb-1 small">Net Savings</p>
+            <h4 id="net-savings" class="text-primary mb-0">₹0</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-percent text-info fs-1 mb-2"></i>
+            <p class="text-muted mb-1 small">Savings Rate</p>
+            <h4 id="savings-rate" class="text-info mb-0">0%</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="row mb-4">
+      <!-- Income vs Expenses Chart -->
+      <div class="col-lg-6 mb-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header bg-white">
+            <h5 class="mb-0"><i class="bi bi-bar-chart-fill"></i> Income vs Expenses</h5>
+          </div>
+          <div class="card-body">
+            <canvas id="incomeExpenseChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Trend Chart -->
+      <div class="col-lg-6 mb-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header bg-white">
+            <h5 class="mb-0"><i class="bi bi-graph-up"></i> Monthly Trend</h5>
+          </div>
+          <div class="card-body">
+            <canvas id="monthlyTrendChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row 2 -->
+    <div class="row mb-4">
+      <!-- Category Breakdown Chart -->
+      <div class="col-lg-6 mb-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header bg-white">
+            <h5 class="mb-0"><i class="bi bi-pie-chart-fill"></i> Expense by Category</h5>
+          </div>
+          <div class="card-body">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction Type Distribution -->
+      <div class="col-lg-6 mb-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header bg-white">
+            <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Credit vs Debit</h5>
+          </div>
+          <div class="card-body">
+            <canvas id="typeDistributionChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Categories Table -->
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-list-ol"></i> Top Spending Categories</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Rank</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Percentage</th>
+                <th>Transactions</th>
+              </tr>
+            </thead>
+            <tbody id="top-categories-table">
+              <tr>
+                <td colspan="5" class="text-center text-muted py-4">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/config.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+
+  <script>
+    let transactions = [];
+    let charts = {};
+
+    function logout() {
+      clearToken();
+      window.location.href = '/';
+    }
+
+    async function loadAnalytics() {
+      const res = await apiCall('/api/csv-transactions');
+      if (res.error) {
+        console.error('Error loading transactions:', res.error);
+        return;
+      }
+
+      transactions = res.transactions || [];
+      
+      calculateSummary();
+      createIncomeExpenseChart();
+      createMonthlyTrendChart();
+      createCategoryChart();
+      createTypeDistributionChart();
+      createTopCategoriesTable();
+    }
+
+    function calculateSummary() {
+      let totalIncome = 0;
+      let totalExpense = 0;
+
+      transactions.forEach(tx => {
+        const amount = parseFloat(tx.amount || 0);
+        if (tx.type === 'credit') {
+          totalIncome += amount;
+        } else if (tx.type === 'debit') {
+          totalExpense += amount;
+        }
+      });
+
+      const netSavings = totalIncome - totalExpense;
+      const savingsRate = totalIncome > 0 ? ((netSavings / totalIncome) * 100) : 0;
+
+      document.getElementById('total-income').textContent = `₹${totalIncome.toLocaleString('en-IN', {maximumFractionDigits: 0})}`;
+      document.getElementById('total-expense').textContent = `₹${totalExpense.toLocaleString('en-IN', {maximumFractionDigits: 0})}`;
+      document.getElementById('net-savings').textContent = `₹${netSavings.toLocaleString('en-IN', {maximumFractionDigits: 0})}`;
+      document.getElementById('savings-rate').textContent = `${savingsRate.toFixed(1)}%`;
+    }
+
+    function createIncomeExpenseChart() {
+      const ctx = document.getElementById('incomeExpenseChart');
+      
+      let totalIncome = 0;
+      let totalExpense = 0;
+
+      transactions.forEach(tx => {
+        const amount = parseFloat(tx.amount || 0);
+        if (tx.type === 'credit') totalIncome += amount;
+        else if (tx.type === 'debit') totalExpense += amount;
+      });
+
+      if (charts.incomeExpense) charts.incomeExpense.destroy();
+
+      charts.incomeExpense = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Income', 'Expenses', 'Net Savings'],
+          datasets: [{
+            label: 'Amount (₹)',
+            data: [totalIncome, totalExpense, totalIncome - totalExpense],
+            backgroundColor: [
+              'rgba(25, 135, 84, 0.8)',
+              'rgba(220, 53, 69, 0.8)',
+              'rgba(13, 110, 253, 0.8)'
+            ],
+            borderColor: [
+              'rgb(25, 135, 84)',
+              'rgb(220, 53, 69)',
+              'rgb(13, 110, 253)'
+            ],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return '₹' + value.toLocaleString('en-IN');
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function createMonthlyTrendChart() {
+      const ctx = document.getElementById('monthlyTrendChart');
+      
+      // Group by month
+      const monthlyData = {};
+      
+      transactions.forEach(tx => {
+        const date = tx.date;
+        const parts = date.split('-');
+        const month = parts[1] + '-' + parts[2]; // MM-YYYY
+        
+        if (!monthlyData[month]) {
+          monthlyData[month] = { income: 0, expense: 0 };
+        }
+        
+        const amount = parseFloat(tx.amount || 0);
+        if (tx.type === 'credit') {
+          monthlyData[month].income += amount;
+        } else if (tx.type === 'debit') {
+          monthlyData[month].expense += amount;
+        }
+      });
+
+      const months = Object.keys(monthlyData).sort();
+      const incomeData = months.map(m => monthlyData[m].income);
+      const expenseData = months.map(m => monthlyData[m].expense);
+
+      const monthNames = {
+        '12': 'Dec', '01': 'Jan', '02': 'Feb'
+      };
+      const labels = months.map(m => {
+        const [month, year] = m.split('-');
+        return `${monthNames[month]} ${year}`;
+      });
+
+      if (charts.monthlyTrend) charts.monthlyTrend.destroy();
+
+      charts.monthlyTrend = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Income',
+              data: incomeData,
+              borderColor: 'rgb(25, 135, 84)',
+              backgroundColor: 'rgba(25, 135, 84, 0.1)',
+              tension: 0.4,
+              fill: true
+            },
+            {
+              label: 'Expenses',
+              data: expenseData,
+              borderColor: 'rgb(220, 53, 69)',
+              backgroundColor: 'rgba(220, 53, 69, 0.1)',
+              tension: 0.4,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              position: 'top'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return '₹' + (value / 1000).toFixed(0) + 'k';
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function createCategoryChart() {
+      const ctx = document.getElementById('categoryChart');
+      
+      // Group expenses by category
+      const categoryData = {};
+      
+      transactions.forEach(tx => {
+        if (tx.type === 'debit') {
+          const category = tx.category || 'other';
+          const amount = parseFloat(tx.amount || 0);
+          categoryData[category] = (categoryData[category] || 0) + amount;
+        }
+      });
+
+      // Sort and get top 8 categories
+      const sortedCategories = Object.entries(categoryData)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+
+      const labels = sortedCategories.map(([cat]) => cat.replace(/_/g, ' ').toUpperCase());
+      const data = sortedCategories.map(([, amount]) => amount);
+
+      const colors = [
+        'rgba(255, 99, 132, 0.8)',
+        'rgba(54, 162, 235, 0.8)',
+        'rgba(255, 206, 86, 0.8)',
+        'rgba(75, 192, 192, 0.8)',
+        'rgba(153, 102, 255, 0.8)',
+        'rgba(255, 159, 64, 0.8)',
+        'rgba(199, 199, 199, 0.8)',
+        'rgba(83, 102, 255, 0.8)'
+      ];
+
+      if (charts.category) charts.category.destroy();
+
+      charts.category = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: colors,
+            borderWidth: 2,
+            borderColor: '#fff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                boxWidth: 12,
+                font: {
+                  size: 11
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const value = context.parsed;
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = ((value / total) * 100).toFixed(1);
+                  return context.label + ': ₹' + value.toLocaleString('en-IN') + ' (' + percentage + '%)';
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function createTypeDistributionChart() {
+      const ctx = document.getElementById('typeDistributionChart');
+      
+      let creditCount = 0;
+      let debitCount = 0;
+      let creditAmount = 0;
+      let debitAmount = 0;
+
+      transactions.forEach(tx => {
+        const amount = parseFloat(tx.amount || 0);
+        if (tx.type === 'credit') {
+          creditCount++;
+          creditAmount += amount;
+        } else if (tx.type === 'debit') {
+          debitCount++;
+          debitAmount += amount;
+        }
+      });
+
+      if (charts.typeDistribution) charts.typeDistribution.destroy();
+
+      charts.typeDistribution = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Credits', 'Debits'],
+          datasets: [{
+            data: [creditAmount, debitAmount],
+            backgroundColor: [
+              'rgba(25, 135, 84, 0.8)',
+              'rgba(220, 53, 69, 0.8)'
+            ],
+            borderWidth: 2,
+            borderColor: '#fff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const value = context.parsed;
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = ((value / total) * 100).toFixed(1);
+                  const count = context.dataIndex === 0 ? creditCount : debitCount;
+                  return context.label + ': ₹' + value.toLocaleString('en-IN') + ' (' + percentage + '%) - ' + count + ' txns';
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function createTopCategoriesTable() {
+      const categoryData = {};
+      const categoryCount = {};
+      
+      transactions.forEach(tx => {
+        if (tx.type === 'debit') {
+          const category = tx.category || 'other';
+          const amount = parseFloat(tx.amount || 0);
+          categoryData[category] = (categoryData[category] || 0) + amount;
+          categoryCount[category] = (categoryCount[category] || 0) + 1;
+        }
+      });
+
+      const totalExpense = Object.values(categoryData).reduce((a, b) => a + b, 0);
+
+      const sortedCategories = Object.entries(categoryData)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+
+      const tbody = document.getElementById('top-categories-table');
+      tbody.innerHTML = '';
+
+      sortedCategories.forEach(([category, amount], index) => {
+        const percentage = ((amount / totalExpense) * 100).toFixed(1);
+        const count = categoryCount[category];
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><span class="badge bg-primary">${index + 1}</span></td>
+          <td><strong>${category.replace(/_/g, ' ').toUpperCase()}</strong></td>
+          <td class="text-danger">₹${amount.toLocaleString('en-IN', {maximumFractionDigits: 0})}</td>
+          <td>
+            <div class="progress" style="height: 20px;">
+              <div class="progress-bar bg-danger" role="progressbar" style="width: ${percentage}%">
+                ${percentage}%
+              </div>
+            </div>
+          </td>
+          <td>${count} txns</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!checkAuth()) return;
+      loadAnalytics();
+    });
+  </script>
+</body>
+</html>

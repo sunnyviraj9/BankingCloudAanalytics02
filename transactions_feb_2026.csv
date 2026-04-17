@@ -1,0 +1,57 @@
+date,description,amount,type,category
+01-02-2026,Opening Balance,47216.49,credit,opening_balance
+01-02-2026,Venna NE - Paytm,20.00,debit,other
+01-02-2026,Venna NE - Paytm,40.00,debit,other
+02-02-2026,Veegala - Paytm,200.00,debit,other
+02-02-2026,Delicious - Paytm,25.00,debit,food_dining
+03-02-2026,Mr Mahi - Paytm,45.00,debit,other
+03-02-2026,Kallu J - Plant,6000.00,credit,other
+03-02-2026,Begumpet - Paytm,20.00,debit,other
+03-02-2026,Avirinen - UPI,700.00,credit,other
+03-02-2026,Doddapan - Plant,4400.00,credit,other
+03-02-2026,CIEL HR SERVICES - Salary,20000.00,credit,salary
+04-02-2026,Mohammad - Paytm,70.00,debit,other
+04-02-2026,Cherukur - Paytm,60.00,debit,other
+04-02-2026,Cherukur - Paytm,30.00,debit,other
+04-02-2026,Avenue S - Paytm,3241.00,debit,shopping
+05-02-2026,Veegala - Paytm,150.00,debit,other
+05-02-2026,K V S Ga - Payment,1000.00,credit,other
+05-02-2026,Sayyed S - Paytm,30.00,debit,other
+05-02-2026,Sakali N - Paytm,20.00,debit,other
+05-02-2026,Jakera B - Paytm,50.00,debit,other
+06-02-2026,Vadlaman - Payment,6700.00,credit,other
+06-02-2026,Sairam E - Paytm,250.00,debit,other
+06-02-2026,V A N P - UPI,15000.00,debit,transfer
+06-02-2026,Yadaiah - Paytm,2500.00,debit,transfer
+06-02-2026,District - Home,10600.00,debit,rent_utilities
+06-02-2026,District - UPI,11820.00,debit,rent_utilities
+06-02-2026,District - UPI,1700.00,debit,rent_utilities
+06-02-2026,Bank Account - Gapfill,5440.00,debit,transfer
+06-02-2026,Veegala - Paytm,700.00,debit,other
+06-02-2026,Amruth - UPI,2000.00,credit,other
+06-02-2026,Amruth - UPI,2000.00,credit,other
+06-02-2026,Amruth - UPI,640.00,credit,other
+06-02-2026,Veegala - Paytm,700.00,credit,other
+06-02-2026,Bandi S - Paytm,1840.00,credit,other
+07-02-2026,Mohammed - Verification,1100.00,debit,other
+07-02-2026,Syed Har - Paytm,120.00,debit,other
+07-02-2026,Gulafsha - Paytm,300.00,debit,other
+08-02-2026,Chepyala - Paytm,200.00,debit,other
+08-02-2026,B Shiva - Sugar,60.00,debit,food_dining
+08-02-2026,Daraboin - Paytm,20.00,credit,other
+08-02-2026,Boini D - Paytm,1500.00,debit,transfer
+08-02-2026,Malige - Fast,90.00,debit,other
+08-02-2026,Mrs Rupa - Snacks,160.00,debit,food_dining
+08-02-2026,Veegala - Paytm,130.00,credit,other
+09-02-2026,New Bharat - Tiffin,60.00,debit,food_dining
+10-02-2026,Kansanpa - Paytm,15.00,debit,other
+10-02-2026,Syed Ri - Paytm,15.00,debit,other
+10-02-2026,Nandapau - UPI,10000.00,debit,transfer
+10-02-2026,Nandapau - Paytm,10000.00,credit,other
+10-02-2026,Nandapau - Paytm,200.00,credit,other
+10-02-2026,Nandapau - UPI,200.00,debit,transfer
+10-02-2026,Nandapau - Paytm,200.00,credit,other
+11-02-2026,Kuppanagar - Paytm,800.00,credit,other
+11-02-2026,Veegala - Paytm,3000.00,credit,other
+11-02-2026,V A N P - UPI,3000.00,debit,transfer
+28-02-2026,Closing Balance,48433.49,credit,closing_balance
